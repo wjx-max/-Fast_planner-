@@ -1,2 +1,2 @@
 # -Fast_planner-
-将港科大的fast_planner算法移植到turtlebot3移动机器人实现多移动机器人编队
+将港科大的fast_planner算法移植到turtlebot3移动机器人实现多移动机器人编队控制
