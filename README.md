@@ -9,7 +9,7 @@
 
 ## packages介绍
 
-## 1 omni_robot
+## 1 turtlebot3_robot
 
 `功能：` 启动仿真环境，会出现一个带雷达的小车。
 
