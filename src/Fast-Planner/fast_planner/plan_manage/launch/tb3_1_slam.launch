@@ -1,0 +1,26 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
+  <!--arg name="open_rviz" default="true"/-->
+  <arg name="open_rviz" default="false"/>
+
+  <!-- Static Transform Publisher for the first robot -->
+  <node pkg="tf" type="static_transform_publisher" name="world_to_tb3_1_odom" 
+        args="0 0 0 0 0 0 /world /tb3_1/odom 10" />
+  
+  <!-- TurtleBot3 Bringup -->
+  <!-- TurtleBot3 for tb3_1 -->
+  <group ns="tb3_1">
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote1.launch">
+      <arg name="model" value="$(arg model)" />
+    </include>
+  </group>
+
+  <!-- RViz -->
+  <group if="$(arg open_rviz)">
+    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log"
+          args="-d $(find plan_manage)/config/tb3_1.rviz" />
+  </group>
+</launch>
+

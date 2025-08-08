@@ -1,0 +1,8 @@
+prefix=/home/wjx/nrypp_ws/install
+
+Name: formation
+Description: Description of formation
+Version: 1.2.6
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp

@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/icon.png</file>
+        <file>images/ui.jpg</file>
+        <file>images/nrypp.jpg</file>
+        <file>images/pushbottonbj.jpg</file>
+        <file>images/pushbutton1.jpg</file>
+        <file>images/title.jpg</file>
+        <file>images/pb1.jpg</file>
+        <file>images/pb2.jpg</file>
+        <file>images/pb8.jpg</file>
+        <file>images/pb7.jpg</file>
+        <file>images/pb6.jpg</file>
+        <file>images/pb5.jpg</file>
+        <file>images/pb4.jpg</file>
+        <file>images/pb3.jpg</file>
+        <file>images/pbbj.jpg</file>
+        <file>images/nryppbj.jpg</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,12 @@
+<launch>
+    <!-- 启动 mpc_tracking_node1 -->
+    <node pkg="mpc_tracking" type="mpc_tracking_node1" name="mpc_tracking_node1" output="screen" />
+
+    <!-- 启动 mpc_tracking_node2 -->
+    <node pkg="mpc_tracking" type="mpc_tracking_node2" name="mpc_tracking_node2" output="screen" />
+
+    <!-- 启动 mpc_tracking_node3 -->
+    <node pkg="mpc_tracking" type="mpc_tracking_node3" name="mpc_tracking_node3" output="screen" />
+
+</launch>
+

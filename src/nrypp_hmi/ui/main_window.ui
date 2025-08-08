@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindowDesign</class>
+ <widget class="QMainWindow" name="MainWindowDesign">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>956</width>
+    <height>510</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QRosApp</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/images.qrc">
+    <normaloff>:/images/icon.png</normaloff>:/images/icon.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="Australia"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>956</width>
+      <height>510</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/images.qrc">:/images/nryppbj.jpg</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_title">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>100</y>
+      <width>148</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/images.qrc">:/images/title.jpg</pixmap>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_init">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>160</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb1.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb1_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_control">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>160</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb2.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb2_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_random">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>240</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb3.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb3_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_massed">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>240</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb4.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb4_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_open">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>320</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb5.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb5_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_close">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>320</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb6.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb6_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_move">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>400</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb7.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb7_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_change">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>400</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+
+image:url(:/images/pb8.jpg);
+border:2px double rgb(114, 159, 207);
+border-radius:8px;
+
+}
+
+QPushButton::hover
+{
+
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}
+
+QPushButton::pressed
+{
+
+image:url(:/images/pb8_pressed.jpg);
+border:2px double rgb(238, 238, 236);
+border-radius:8px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>70</y>
+      <width>491</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="layout_rviz">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="action_Preferences">
+   <property name="text">
+    <string>&amp;Preferences</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About &amp;Qt</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../resources/images.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>action_Quit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowDesign</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

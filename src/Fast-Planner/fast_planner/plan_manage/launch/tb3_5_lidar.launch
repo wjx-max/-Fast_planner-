@@ -1,0 +1,495 @@
+<launch>
+  <!-- size of map, change the size in x, y, z according to your application -->
+  <arg name="map_size_x" value="40.0"/>
+  <arg name="map_size_y" value="40.0"/>
+  <arg name="map_size_z" value="0.5 "/> 
+
+  <!-- topic of your odometry such as VIO or LIO -->
+  <arg name="odom_topic1" value="tb3_1/odom" />
+  <arg name="odom_topic2" value="tb3_2/odom" />
+  <arg name="odom_topic3" value="tb3_3/odom" />
+  <arg name="odom_topic4" value="tb3_4/odom" />
+  <arg name="odom_topic5" value="tb3_5/odom" />
+
+  <!-- main algorithm params -->
+  <include file="$(find plan_manage)/launch/lidar.xml">
+    <arg name="node_name" value="fast_planner_node1"/>
+    <arg name="waypoint_generator" value="/waypoint_generator1/waypoints"/>
+    <arg name="planning_replan" value="/tb3_1/plannings/replan"/>
+    <arg name="planning_new" value="/tb3_1/planning/new"/>
+    <arg name="planning_bspline" value="/tb3_1/planning/bspline"/>
+
+    <!-- planning_visualization -->
+    <arg name="planning_vis" value="/tb3_1/planning_vis/trajectory"/>
+    <param name="frame_id" value="$(arg odom_topic1)"/>
+
+    <arg name="occupancy_inflate" value="/tb3_1/sdf_map/occupancy_inflate"/>
+    <arg name="sdf_map_odom" value="/tb3_1/odom"/>
+
+   <!--local fusion-->
+   <!--param name="sdf_map/frame_id" value="$(arg odom_topic1)"/-->
+
+    <arg name="map_size_x_" value="$(arg map_size_x)"/>
+    <arg name="map_size_y_" value="$(arg map_size_y)"/>
+    <arg name="map_size_z_" value="$(arg map_size_z)"/>
+    <arg name="odometry_topic" value="$(arg odom_topic1)"/>
+
+    <!-- camera pose: transform of camera frame in the world frame -->
+    <!-- depth topic: depth image, 640x480 by default -->
+    <!-- don't set cloud_topic if you already set these ones! -->
+    <arg name="camera_pose_topic" value="tb3_1/pcl_render_node/camera_pose"/><!--geometry_msgs::PoseStamped-->
+    <arg name="depth_topic" value="tb3_1/pcl_render_node/depth"/>
+
+    <!-- topic of point cloud measurement, such as from LIDAR  -->
+    <!-- don't set camera pose and depth, if you already set this one! -->
+    <arg name="cloud_topic" value="/map_generator/global_cloud"/>
+    <arg name="cloud_topic2" value="tb3_1/point_cloud_map"/>
+
+    <!-- intrinsic params of the depth camera -->
+    <arg name="cx" value="321.04638671875"/>
+    <arg name="cy" value="243.44969177246094"/>
+    <arg name="fx" value="387.229248046875"/>
+    <arg name="fy" value="387.229248046875"/>
+
+    <!-- maximum velocity and acceleration the drone will reach -->
+    <!-- <arg name="max_vel" value="3" />
+    <arg name="max_acc" value="2" /> -->
+
+    <arg name="max_vel" value="0.3" />
+    <arg name="max_acc" value="0.3" />
+
+    <!-- 1: use 2D Nav Goal to select goal  -->
+    <!-- 2: use global waypoints below  -->
+    <arg name="flight_type" value="1" />
+    
+    <!-- global waypoints -->
+    <!-- If flight_type is set to 2, the drone will travel these waypoints one by one -->
+    <arg name="point_num" value="3" />
+
+    <arg name="point0_x" value="2" />
+    <arg name="point0_y" value="0" />
+    <arg name="point0_z" value="0" />
+
+    <!-- set more waypoints if you need -->
+    <arg name="point1_x" value="2" />
+    <arg name="point1_y" value="-5" />
+    <arg name="point1_z" value="0" />
+
+    <arg name="point2_x" value="5.0" />
+    <arg name="point2_y" value="-10.0" />
+    <arg name="point2_z" value="0.0" />
+    
+  </include>
+
+  <!-- trajectory server -->
+  <node pkg="plan_manage" name="traj_server1" type="traj_server" output="screen">
+    <remap from="/position_cmd" to="/tb3_1/planning/pos_cmd"/>
+    <remap from="/odom_world" to="$(arg odom_topic1)"/>
+    <param name="traj_server/time_forward" value="1.5" type="double"/>
+
+    <remap from="/planning/bspline" to="tb3_1/planning/bspline"/>
+    <remap from="/planning/replan" to="tb3_1/planning/replan"/>
+    <remap from="/planning/new" to="tb3_1/planning/new"/>
+    <remap from="/planning/position_cmd_vis" to="tb3_1/planning/position_cmd_vis"/>
+    <remap from="/planning/travel_traj" to="tb3_1/planning/travel_traj"/>
+
+    <param name="frame_id" value="$(arg odom_topic1)"/>
+
+  </node>
+
+  <node pkg="waypoint_generator" name="waypoint_generator1" type="waypoint_generator" output="screen">
+    <remap from="~odom" to="$(arg odom_topic1)"/>        
+    <remap from="~goal" to="tb3_1/move_base_simple/goal"/>
+    <remap from="~traj_start_trigger" to="tb3_1/traj_start_trigger" />
+    <param name="waypoint_type" value="manual-lonely-waypoint"/>    
+  </node>
+
+
+
+  <!--robot2-->
+  <!-- main algorithm params -->
+  <include file="$(find plan_manage)/launch/lidar.xml">
+
+    <arg name="node_name" value="fast_planner_node2"/>
+    <arg name="waypoint_generator" value="/waypoint_generator2/waypoints"/>
+    <arg name="planning_replan" value="/tb3_2/planning/replan"/>
+    <arg name="planning_new" value="/tb3_2/planning/new"/>
+    <arg name="planning_bspline" value="/tb3_2/planning/bspline"/>
+
+    <!-- planning_visualization -->
+    <arg name="planning_vis" value="/tb3_2/planning_vis/trajectory"/>
+    <param name="frame_id" value="$(arg odom_topic2)"/>
+
+    <arg name="occupancy_inflate" value="/tb3_2/sdf_map/occupancy_inflate"/>
+    <arg name="sdf_map_odom" value="/tb3_2/odom"/>
+   <!--local fusion-->
+   <!--param name="sdf_map/frame_id" value="$(arg odom_topic2)"/-->
+
+
+    <arg name="map_size_x_" value="$(arg map_size_x)"/>
+    <arg name="map_size_y_" value="$(arg map_size_y)"/>
+    <arg name="map_size_z_" value="$(arg map_size_z)"/>
+    <arg name="odometry_topic" value="$(arg odom_topic2)"/>
+
+    <!-- camera pose: transform of camera frame in the world frame -->
+    <!-- depth topic: depth image, 640x480 by default -->
+    <!-- don't set cloud_topic if you already set these ones! -->
+    <arg name="camera_pose_topic" value="tb3_2/pcl_render_node/camera_pose"/><!--geometry_msgs::PoseStamped-->
+    <arg name="depth_topic" value="tb3_2/pcl_render_node/depth"/>
+
+    <!-- topic of point cloud measurement, such as from LIDAR  -->
+    <!-- don't set camera pose and depth, if you already set this one! -->
+    <arg name="cloud_topic" value="/map_generator/global_cloud"/>
+    <arg name="cloud_topic2" value="tb3_2/point_cloud_map"/>
+
+    <!-- intrinsic params of the depth camera -->
+    <arg name="cx" value="321.04638671875"/>
+    <arg name="cy" value="243.44969177246094"/>
+    <arg name="fx" value="387.229248046875"/>
+    <arg name="fy" value="387.229248046875"/>
+
+    <!-- maximum velocity and acceleration the drone will reach -->
+    <!-- <arg name="max_vel" value="3" />
+    <arg name="max_acc" value="2" /> -->
+
+    <arg name="max_vel" value="0.3" />
+    <arg name="max_acc" value="0.3" />
+
+    <!-- 1: use 2D Nav Goal to select goal  -->
+    <!-- 2: use global waypoints below  -->
+    <arg name="flight_type" value="1" />
+    
+    <!-- global waypoints -->
+    <!-- If flight_type is set to 2, the drone will travel these waypoints one by one -->
+    <arg name="point_num" value="3" />
+
+    <arg name="point0_x" value="2" />
+    <arg name="point0_y" value="0" />
+    <arg name="point0_z" value="0" />
+
+    <!-- set more waypoints if you need -->
+    <arg name="point1_x" value="2" />
+    <arg name="point1_y" value="-5" />
+    <arg name="point1_z" value="0" />
+
+    <arg name="point2_x" value="5.0" />
+    <arg name="point2_y" value="-10.0" />
+    <arg name="point2_z" value="0.0" />
+    
+  </include>
+
+  <!-- trajectory server -->
+  <node pkg="plan_manage" name="traj_server2" type="traj_server" output="screen">
+    <remap from="/position_cmd" to="tb3_2/planning/pos_cmd"/>
+    <remap from="/odom_world" to="$(arg odom_topic2)"/>
+    <param name="traj_server/time_forward" value="1.5" type="double"/>
+
+    <remap from="/planning/bspline" to="tb3_2/planning/bspline"/>
+    <remap from="/planning/replan" to="tb3_2/planning/replan"/>
+    <remap from="/planning/new" to="tb3_2/planning/new"/>
+    <remap from="/planning/position_cmd_vis" to="tb3_2/planning/position_cmd_vis"/>
+    <remap from="/planning/travel_traj" to="tb3_2/planning/travel_traj"/>
+
+    <param name="frame_id" value="$(arg odom_topic2)"/>
+  </node>
+
+  <node pkg="waypoint_generator" name="waypoint_generator2" type="waypoint_generator" output="screen">
+    <remap from="~odom" to="$(arg odom_topic2)"/>        
+    <remap from="~goal" to="tb3_2/move_base_simple/goal"/>
+    <remap from="~traj_start_trigger" to="tb3_2/traj_start_trigger" />
+    <param name="waypoint_type" value="manual-lonely-waypoint"/>    
+  </node>
+
+
+
+
+   <!--robot3-->
+  <!-- main algorithm params -->
+  <include file="$(find plan_manage)/launch/lidar.xml">
+
+    <arg name="node_name" value="fast_planner_node3"/>
+    <arg name="waypoint_generator" value="/waypoint_generator3/waypoints"/>
+    <arg name="planning_replan" value="/tb3_3/planning/replan"/>
+    <arg name="planning_new" value="/tb3_3/planning/new"/>
+    <arg name="planning_bspline" value="/tb3_3/planning/bspline"/>
+
+    <!-- planning_visualization -->
+    <arg name="planning_vis" value="/tb3_3/planning_vis/trajectory"/>
+    <param name="frame_id" value="$(arg odom_topic3)"/>
+
+    <arg name="occupancy_inflate" value="/tb3_3/sdf_map/occupancy_inflate"/>
+    <arg name="sdf_map_odom" value="/tb3_3/odom"/>
+   <!--local fusion-->
+   <!--param name="sdf_map/frame_id" value="$(arg odom_topic2)"/-->
+
+
+    <arg name="map_size_x_" value="$(arg map_size_x)"/>
+    <arg name="map_size_y_" value="$(arg map_size_y)"/>
+    <arg name="map_size_z_" value="$(arg map_size_z)"/>
+    <arg name="odometry_topic" value="$(arg odom_topic3)"/>
+
+    <!-- camera pose: transform of camera frame in the world frame -->
+    <!-- depth topic: depth image, 640x480 by default -->
+    <!-- don't set cloud_topic if you already set these ones! -->
+    <arg name="camera_pose_topic" value="tb3_3/pcl_render_node/camera_pose"/><!--geometry_msgs::PoseStamped-->
+    <arg name="depth_topic" value="tb3_3/pcl_render_node/depth"/>
+
+    <!-- topic of point cloud measurement, such as from LIDAR  -->
+    <!-- don't set camera pose and depth, if you already set this one! -->
+    <arg name="cloud_topic" value="/map_generator/global_cloud"/>
+    <arg name="cloud_topic2" value="tb3_3/point_cloud_map"/>
+
+    <!-- intrinsic params of the depth camera -->
+    <arg name="cx" value="321.04638671875"/>
+    <arg name="cy" value="243.44969177246094"/>
+    <arg name="fx" value="387.229248046875"/>
+    <arg name="fy" value="387.229248046875"/>
+
+    <!-- maximum velocity and acceleration the drone will reach -->
+    <!-- <arg name="max_vel" value="3" />
+    <arg name="max_acc" value="2" /> -->
+
+    <arg name="max_vel" value="0.3" />
+    <arg name="max_acc" value="0.3" />
+
+    <!-- 1: use 2D Nav Goal to select goal  -->
+    <!-- 2: use global waypoints below  -->
+    <arg name="flight_type" value="1" />
+    
+    <!-- global waypoints -->
+    <!-- If flight_type is set to 2, the drone will travel these waypoints one by one -->
+    <arg name="point_num" value="3" />
+
+    <arg name="point0_x" value="2" />
+    <arg name="point0_y" value="0" />
+    <arg name="point0_z" value="0" />
+
+    <!-- set more waypoints if you need -->
+    <arg name="point1_x" value="2" />
+    <arg name="point1_y" value="-5" />
+    <arg name="point1_z" value="0" />
+
+    <arg name="point2_x" value="5.0" />
+    <arg name="point2_y" value="-10.0" />
+    <arg name="point2_z" value="0.0" />
+    
+  </include>
+
+  <!-- trajectory server -->
+  <node pkg="plan_manage" name="traj_server3" type="traj_server" output="screen">
+    <remap from="/position_cmd" to="tb3_3/planning/pos_cmd"/>
+    <remap from="/odom_world" to="$(arg odom_topic3)"/>
+    <param name="traj_server/time_forward" value="1.5" type="double"/>
+
+    <remap from="/planning/bspline" to="tb3_3/planning/bspline"/>
+    <remap from="/planning/replan" to="tb3_3/planning/replan"/>
+    <remap from="/planning/new" to="tb3_3/planning/new"/>
+    <remap from="/planning/position_cmd_vis" to="tb3_3/planning/position_cmd_vis"/>
+    <remap from="/planning/travel_traj" to="tb3_3/planning/travel_traj"/>
+
+    <param name="frame_id" value="$(arg odom_topic3)"/>
+  </node>
+
+  <node pkg="waypoint_generator" name="waypoint_generator3" type="waypoint_generator" output="screen">
+    <remap from="~odom" to="$(arg odom_topic3)"/>        
+    <remap from="~goal" to="tb3_3/move_base_simple/goal"/>
+    <remap from="~traj_start_trigger" to="tb3_3/traj_start_trigger" />
+    <param name="waypoint_type" value="manual-lonely-waypoint"/>    
+  </node>
+
+
+
+
+  <!--robot4-->
+  <!-- main algorithm params -->
+  <include file="$(find plan_manage)/launch/lidar.xml">
+
+    <arg name="node_name" value="fast_planner_node4"/>
+    <arg name="waypoint_generator" value="/waypoint_generator4/waypoints"/>
+    <arg name="planning_replan" value="/tb3_4/planning/replan"/>
+    <arg name="planning_new" value="/tb3_4/planning/new"/>
+    <arg name="planning_bspline" value="/tb3_4/planning/bspline"/>
+
+    <!-- planning_visualization -->
+    <arg name="planning_vis" value="/tb3_4/planning_vis/trajectory"/>
+    <param name="frame_id" value="$(arg odom_topic4)"/>
+
+    <arg name="occupancy_inflate" value="/tb3_4/sdf_map/occupancy_inflate"/>
+    <arg name="sdf_map_odom" value="/tb3_4/odom"/>
+   <!--local fusion-->
+   <!--param name="sdf_map/frame_id" value="$(arg odom_topic2)"/-->
+
+
+    <arg name="map_size_x_" value="$(arg map_size_x)"/>
+    <arg name="map_size_y_" value="$(arg map_size_y)"/>
+    <arg name="map_size_z_" value="$(arg map_size_z)"/>
+    <arg name="odometry_topic" value="$(arg odom_topic4)"/>
+
+    <!-- camera pose: transform of camera frame in the world frame -->
+    <!-- depth topic: depth image, 640x480 by default -->
+    <!-- don't set cloud_topic if you already set these ones! -->
+    <arg name="camera_pose_topic" value="tb3_4/pcl_render_node/camera_pose"/><!--geometry_msgs::PoseStamped-->
+    <arg name="depth_topic" value="tb3_4/pcl_render_node/depth"/>
+
+    <!-- topic of point cloud measurement, such as from LIDAR  -->
+    <!-- don't set camera pose and depth, if you already set this one! -->
+    <arg name="cloud_topic" value="/map_generator/global_cloud"/>
+    <arg name="cloud_topic2" value="tb3_4/point_cloud_map"/>
+
+    <!-- intrinsic params of the depth camera -->
+    <arg name="cx" value="321.04638671875"/>
+    <arg name="cy" value="243.44969177246094"/>
+    <arg name="fx" value="387.229248046875"/>
+    <arg name="fy" value="387.229248046875"/>
+
+    <!-- maximum velocity and acceleration the drone will reach -->
+    <!-- <arg name="max_vel" value="3" />
+    <arg name="max_acc" value="2" /> -->
+
+    <arg name="max_vel" value="0.3" />
+    <arg name="max_acc" value="0.3" />
+
+    <!-- 1: use 2D Nav Goal to select goal  -->
+    <!-- 2: use global waypoints below  -->
+    <arg name="flight_type" value="1" />
+    
+    <!-- global waypoints -->
+    <!-- If flight_type is set to 2, the drone will travel these waypoints one by one -->
+    <arg name="point_num" value="3" />
+
+    <arg name="point0_x" value="2" />
+    <arg name="point0_y" value="0" />
+    <arg name="point0_z" value="0" />
+
+    <!-- set more waypoints if you need -->
+    <arg name="point1_x" value="2" />
+    <arg name="point1_y" value="-5" />
+    <arg name="point1_z" value="0" />
+
+    <arg name="point2_x" value="5.0" />
+    <arg name="point2_y" value="-10.0" />
+    <arg name="point2_z" value="0.0" />
+    
+  </include>
+
+  <!-- trajectory server -->
+  <node pkg="plan_manage" name="traj_server4" type="traj_server" output="screen">
+    <remap from="/position_cmd" to="tb3_4/planning/pos_cmd"/>
+    <remap from="/odom_world" to="$(arg odom_topic4)"/>
+    <param name="traj_server/time_forward" value="1.5" type="double"/>
+
+    <remap from="/planning/bspline" to="tb3_4/planning/bspline"/>
+    <remap from="/planning/replan" to="tb3_4/planning/replan"/>
+    <remap from="/planning/new" to="tb3_4/planning/new"/>
+    <remap from="/planning/position_cmd_vis" to="tb3_4/planning/position_cmd_vis"/>
+    <remap from="/planning/travel_traj" to="tb3_4/planning/travel_traj"/>
+
+    <param name="frame_id" value="$(arg odom_topic4)"/>
+  </node>
+
+  <node pkg="waypoint_generator" name="waypoint_generator4" type="waypoint_generator" output="screen">
+    <remap from="~odom" to="$(arg odom_topic4)"/>        
+    <remap from="~goal" to="tb3_4/move_base_simple/goal"/>
+    <remap from="~traj_start_trigger" to="tb3_4/traj_start_trigger" />
+    <param name="waypoint_type" value="manual-lonely-waypoint"/>    
+  </node>
+ 
+
+
+ <!--robot5-->
+  <!-- main algorithm params -->
+  <include file="$(find plan_manage)/launch/lidar.xml">
+
+    <arg name="node_name" value="fast_planner_node5"/>
+    <arg name="waypoint_generator" value="/waypoint_generator5/waypoints"/>
+    <arg name="planning_replan" value="/tb3_5/planning/replan"/>
+    <arg name="planning_new" value="/tb3_5/planning/new"/>
+    <arg name="planning_bspline" value="/tb3_5/planning/bspline"/>
+
+    <!-- planning_visualization -->
+    <arg name="planning_vis" value="/tb3_5/planning_vis/trajectory"/>
+    <param name="frame_id" value="$(arg odom_topic5)"/>
+
+    <arg name="occupancy_inflate" value="/tb3_5/sdf_map/occupancy_inflate"/>
+    <arg name="sdf_map_odom" value="/tb3_5/odom"/>
+   <!--local fusion-->
+   <!--param name="sdf_map/frame_id" value="$(arg odom_topic2)"/-->
+
+
+    <arg name="map_size_x_" value="$(arg map_size_x)"/>
+    <arg name="map_size_y_" value="$(arg map_size_y)"/>
+    <arg name="map_size_z_" value="$(arg map_size_z)"/>
+    <arg name="odometry_topic" value="$(arg odom_topic5)"/>
+
+    <!-- camera pose: transform of camera frame in the world frame -->
+    <!-- depth topic: depth image, 640x480 by default -->
+    <!-- don't set cloud_topic if you already set these ones! -->
+    <arg name="camera_pose_topic" value="tb3_5/pcl_render_node/camera_pose"/><!--geometry_msgs::PoseStamped-->
+    <arg name="depth_topic" value="tb3_5/pcl_render_node/depth"/>
+
+    <!-- topic of point cloud measurement, such as from LIDAR  -->
+    <!-- don't set camera pose and depth, if you already set this one! -->
+    <arg name="cloud_topic" value="/map_generator/global_cloud"/>
+    <arg name="cloud_topic2" value="tb3_5/point_cloud_map"/>
+
+    <!-- intrinsic params of the depth camera -->
+    <arg name="cx" value="321.04638671875"/>
+    <arg name="cy" value="243.44969177246094"/>
+    <arg name="fx" value="387.229248046875"/>
+    <arg name="fy" value="387.229248046875"/>
+
+    <!-- maximum velocity and acceleration the drone will reach -->
+    <!-- <arg name="max_vel" value="3" />
+    <arg name="max_acc" value="2" /> -->
+
+    <arg name="max_vel" value="0.3" />
+    <arg name="max_acc" value="0.3" />
+
+    <!-- 1: use 2D Nav Goal to select goal  -->
+    <!-- 2: use global waypoints below  -->
+    <arg name="flight_type" value="1" />
+    
+    <!-- global waypoints -->
+    <!-- If flight_type is set to 2, the drone will travel these waypoints one by one -->
+    <arg name="point_num" value="3" />
+
+    <arg name="point0_x" value="2" />
+    <arg name="point0_y" value="0" />
+    <arg name="point0_z" value="0" />
+
+    <!-- set more waypoints if you need -->
+    <arg name="point1_x" value="2" />
+    <arg name="point1_y" value="-5" />
+    <arg name="point1_z" value="0" />
+
+    <arg name="point2_x" value="5.0" />
+    <arg name="point2_y" value="-10.0" />
+    <arg name="point2_z" value="0.0" />
+    
+  </include>
+
+  <!-- trajectory server -->
+  <node pkg="plan_manage" name="traj_server5" type="traj_server" output="screen">
+    <remap from="/position_cmd" to="tb3_5/planning/pos_cmd"/>
+    <remap from="/odom_world" to="$(arg odom_topic5)"/>
+    <param name="traj_server/time_forward" value="1.5" type="double"/>
+
+    <remap from="/planning/bspline" to="tb3_5/planning/bspline"/>
+    <remap from="/planning/replan" to="tb3_5/planning/replan"/>
+    <remap from="/planning/new" to="tb3_5/planning/new"/>
+    <remap from="/planning/position_cmd_vis" to="tb3_5/planning/position_cmd_vis"/>
+    <remap from="/planning/travel_traj" to="tb3_5/planning/travel_traj"/>
+
+    <param name="frame_id" value="$(arg odom_topic5)"/>
+  </node>
+
+  <node pkg="waypoint_generator" name="waypoint_generator5" type="waypoint_generator" output="screen">
+    <remap from="~odom" to="$(arg odom_topic5)"/>        
+    <remap from="~goal" to="tb3_5/move_base_simple/goal"/>
+    <remap from="~traj_start_trigger" to="tb3_5/traj_start_trigger" />
+    <param name="waypoint_type" value="manual-lonely-waypoint"/>    
+  </node>
+
+
+
+</launch>

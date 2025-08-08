@@ -1,0 +1,22 @@
+<launch>
+  <!-- 启动 turtlebot3_gazebo -->
+  <include file="$(find turtlebot3_gazebo)/launch/tb3_4_worlds.launch"/>
+
+  <!-- 启动 plan_manage 中的 SLAM -->
+  <include file="$(find plan_manage)/launch/tb3_4_slam.launch"/>
+
+  <!-- 启动 plan_manage 中的 lidar -->
+  <include file="$(find plan_manage)/launch/tb3_4_lidar.launch"/>
+
+  <!-- 启动 lidar2world -->
+  <include file="$(find lidar2world)/launch/tb3_4_transform.launch"/>
+
+  <!-- 启动 mpc_tracking -->
+  <include file="$(find mpc_tracking)/launch/tb3_4_mpc.launch"/>
+
+  <!-- 启动 map_generator -->
+  <include file="$(find map_generator)/launch/tb3_map.launch"/>
+
+
+</launch>
+

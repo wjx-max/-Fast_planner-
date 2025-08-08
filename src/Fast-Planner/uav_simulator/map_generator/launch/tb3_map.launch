@@ -1,0 +1,6 @@
+<launch>
+    <!-- 启动 mpc_tracking_node1 -->
+    <node pkg="map_generator" type="random_forest" name="random_forest" output="screen" />
+
+</launch>
+

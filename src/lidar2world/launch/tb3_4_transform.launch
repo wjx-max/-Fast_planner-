@@ -1,0 +1,6 @@
+<launch>
+    <!-- 启动 mpc_tracking_node4 -->
+    <node pkg="lidar2world" type="tb3_4_transform_node" name="tb3_4_transform_node" output="screen" />
+
+</launch>
+
