@@ -1,7 +1,7 @@
 # NMPC_CASADI_CPP
 #  small car
 
-运行效果见B站：https://www.bilibili.com/video/BV1wh4y1j7LD/?spm_id_from=333.999.0.0&vd_source=62bfb7720b0b2f9941f7f34210ba6a18
+运行效果见B站：[https://www.bilibili.com/video/BV1wh4y1j7LD/?spm_id_from=333.999.0.0&vd_source=62bfb7720b0b2f9941f7f34210ba6a18](https://www.bilibili.com/video/BV1MtC8YEEYt/?spm_id_from=333.1387.homepage.video_card.click&vd_source=9a51f24d820537d7dd7374f9d3bf1e19)
 ## 安装求解器
 需要安装casadi，C++需要源码安装casadi，casadi要调用ipopt这个非线性求解器,所以安装casadi前需要安装ipopt,我也是参考别人博客安装的。
 ## 编译
@@ -13,7 +13,7 @@
 
 `功能：` 启动仿真环境，会出现一个带雷达的小车。
 
-`启动：` roslaunch omni_gazebo gazebo.launch 
+`启动：` roslaunch turtlebot3_gazebo tb3_3_worlds.launch 
 
 ## 2 lidar2world
 
